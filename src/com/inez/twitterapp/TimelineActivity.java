@@ -15,27 +15,47 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class TimelineActivity extends Activity {
 
+	private ListView lv_tweets;
+	private TweetsAdapter adapter;
+	private ArrayList<Tweet> tweets;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		
-		Log.d("TimelineActivity", "onCreate");
-		
-		TwitterApp.getRestClient().getHomeTimeline(new JsonHttpResponseHandler() {
 
+		lv_tweets = (ListView) findViewById(R.id.lv_tweets);
+		tweets = new ArrayList<Tweet>();
+		adapter = new TweetsAdapter(this, tweets);
+		lv_tweets.setAdapter(adapter);
+		lv_tweets.setOnScrollListener(new EndlessScrollListener() {
+			
 			@Override
-			public void onSuccess(JSONArray jsonTweets) {
-				ArrayList<Tweet> tweets = Tweet.fromJson(jsonTweets);
-				ListView lv_tweets = (ListView) findViewById(R.id.lv_tweets);
-				TweetsAdapter adapter = new TweetsAdapter(getBaseContext(), tweets);
-				lv_tweets.setAdapter(adapter);
-				
-				Log.d("TimelineActivity", "Number of tweets: " + String.valueOf(tweets.size()));
-				super.onSuccess(jsonTweets);
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.d("onLoadMore", "page: " + page + ", totalItemsCount: " + totalItemsCount);
+				a(adapter.getItem(totalItemsCount - 1).getId());
 			}
 
 		});
+		
+		a(null);
+
+	}
+	
+	private void a(final Long max_id) {
+		TwitterApp.getRestClient().getHomeTimeline(max_id, new JsonHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(JSONArray jsonTweets) {
+				ArrayList<Tweet> set = Tweet.fromJson(jsonTweets);
+				if ( max_id != null ) {
+					set.remove(0);					
+				}
+				adapter.addAll(set);
+				super.onSuccess(jsonTweets);
+			}
+
+		});		
 	}
 
 	@Override
