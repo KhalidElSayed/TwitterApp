@@ -39,7 +39,7 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(long max_id, AsyncHttpResponseHandler handler) {
     	String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        // TODO: What it be better to define max_id as Long (instead of long) and pass/compare to null?
+        // TODO: Would it be better to define max_id as Long (instead of long) and pass/compare to null?
     	if ( max_id != 0 ) {
     		params.put("max_id", String.valueOf(max_id));
     	}
