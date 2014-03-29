@@ -1,10 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:onClick="onComposeClick"
         android:id="@+id/action_compose"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_compose"/>
-
+        android:title="@string/action_compose"
+        android:icon="@drawable/ic_action_compose"
+        android:onClick="onComposeClick" />
+    
 </menu>
