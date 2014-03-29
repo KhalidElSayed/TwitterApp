@@ -1,10 +1,14 @@
 package com.inez.twitterapp.models;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.inez.twitterapp.helpers.Helpers;
 
 public class Tweet {
 	private String body;
@@ -12,6 +16,7 @@ public class Tweet {
 	private boolean favorited;
 	private boolean retweeted;
 	private User user;
+	private Date createdAt;
 
 	public User getUser() {
 		return user;
@@ -33,6 +38,10 @@ public class Tweet {
 		return retweeted;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
 	public static Tweet fromJson(JSONObject jsonObject) {
 		Tweet tweet = new Tweet();
 		try {
@@ -41,6 +50,12 @@ public class Tweet {
 			tweet.favorited = jsonObject.getBoolean("favorited");
 			tweet.retweeted = jsonObject.getBoolean("retweeted");
 			tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+			try {
+				tweet.createdAt = Helpers.parseTwitterUTC(jsonObject.getString("created_at"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
@@ -68,4 +83,5 @@ public class Tweet {
 
 		return tweets;
 	}
+
 }

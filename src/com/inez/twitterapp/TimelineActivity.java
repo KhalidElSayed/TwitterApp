@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.inez.twitterapp.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -87,6 +89,11 @@ public class TimelineActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.timeline, menu);
 		return true;
+	}
+	
+	public void onComposeClick(MenuItem menuItem) {
+		Intent intent = new Intent(this, ComposeActivity.class);
+		startActivity(intent);
 	}
 
 }
