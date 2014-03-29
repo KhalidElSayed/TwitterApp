@@ -31,11 +31,16 @@ public class TwitterClient extends OAuthBaseClient {
     public TwitterClient(Context context) {
         super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
     }
-    
-    public void getHomeTimeline(Long max_id, AsyncHttpResponseHandler handler) {
+
+    public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+    	getHomeTimeline(0, handler);
+    }
+
+    public void getHomeTimeline(long max_id, AsyncHttpResponseHandler handler) {
     	String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-    	if ( max_id != null ) {
+        // TODO: What it be better to define max_id as Long (instead of long) and pass/compare to null?
+    	if ( max_id != 0 ) {
     		params.put("max_id", String.valueOf(max_id));
     	}
 		params.put("count", "25");
