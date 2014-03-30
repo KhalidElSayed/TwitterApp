@@ -42,6 +42,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         // body
         TextView bodyView = (TextView) view.findViewById(R.id.tvBody);
         bodyView.setText(Html.fromHtml(tweet.getBody()));
+        //bodyView.setText(Html.fromHtml(android.util.Patterns.WEB_URL.matcher(tweet.getBody()).replaceAll("<a href='$0'>$0</a>")));
 
         // time
         TextView timeView = (TextView) view.findViewById(R.id.tvTime);

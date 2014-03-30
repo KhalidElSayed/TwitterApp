@@ -28,20 +28,15 @@
                 android:layout_alignParentTop="true" />
 
             <TextView
+                android:autoLink="web"
+                android:linksClickable="false"
                 android:id="@+id/tvBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tvName"
                 android:layout_below="@+id/tvName" />
-<!-- 
-           <TextView
-               android:id="@+id/tvTime"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentRight="true"
-               android:layout_alignParentTop="true" />
--->                   
-           <TextView
+
+            <TextView
                android:id="@+id/tvTime"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
