@@ -1,5 +1,6 @@
 package com.inez.twitterapp.models;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,8 @@ import org.json.JSONObject;
 
 import com.inez.twitterapp.helpers.Helpers;
 
-public class Tweet {
+public class Tweet implements Serializable {
+	private static final long serialVersionUID = -4849210389375451448L;
 	private String body;
 	private long uid;
 	private boolean favorited;

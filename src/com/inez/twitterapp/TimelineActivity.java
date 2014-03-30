@@ -23,6 +23,8 @@ public class TimelineActivity extends Activity {
 	private TweetsAdapter adapter;
 	private ArrayList<Tweet> tweets;
 	private TwitterClient client;
+	public static final String TWEET_KEY = "tweet";
+	public static final int COMPOSE_REQUEST = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,16 @@ public class TimelineActivity extends Activity {
 	
 	public void onComposeClick(MenuItem menuItem) {
 		Intent intent = new Intent(this, ComposeActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, COMPOSE_REQUEST);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if ( requestCode == COMPOSE_REQUEST ) {
+			if ( resultCode == RESULT_OK ) {
+				Tweet tweet = (Tweet) data.getSerializableExtra(TWEET_KEY);
+				adapter.insert(tweet, 0);
+			}
+		}
 	}
 
 }

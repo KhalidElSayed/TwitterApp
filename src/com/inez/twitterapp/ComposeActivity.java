@@ -1,10 +1,16 @@
 package com.inez.twitterapp;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+
+import com.inez.twitterapp.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ComposeActivity extends Activity {
 
@@ -26,7 +32,15 @@ public class ComposeActivity extends Activity {
 	public void onPostClick(View v) {
 		EditText et_tweet = (EditText) findViewById(R.id.et_tweet);
 		client = TwitterApp.getRestClient();
-		client.postUpdate(et_tweet.getText().toString(), null);
+		client.postUpdate(et_tweet.getText().toString(), new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject jsonTweet) {
+				Intent data = new Intent();
+				data.putExtra(TimelineActivity.TWEET_KEY, Tweet.fromJson(jsonTweet));
+				setResult(RESULT_OK, data);
+				finish();
+			}
+		});
 	}
 
 }
