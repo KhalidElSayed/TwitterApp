@@ -49,7 +49,7 @@ public class TimelineActivity extends Activity {
 			public void onLoadMore(int page, int totalItemsCount) {
 				Log.d("onLoadMore", "page: " + page + ", totalItemsCount: " + totalItemsCount);
 				if ( totalItemsCount > 1 ) {
-					fetchTimelineAsync(adapter.getItem(totalItemsCount - 2).getId() - 1, new FetchTimelineHandler() {
+					fetchTimelineAsync(adapter.getItem(totalItemsCount - 2).getRemoteId() - 1, new FetchTimelineHandler() {
 						@Override
 						public void onFetched(ArrayList<Tweet> tweets) {
 							adapter.addAll(tweets);
@@ -106,7 +106,7 @@ public class TimelineActivity extends Activity {
 	private void loadTimelineFromDB() {
 		List<Tweet> tweets = new Select()
 			.from(Tweet.class)
-			.orderBy("createdAt ASC")
+			.orderBy("createdAt DESC")
 			.execute();
 		adapter.addAll(tweets);
 	}
