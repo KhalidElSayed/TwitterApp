@@ -31,8 +31,8 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         Tweet tweet = getItem(position);
         
         // profile picture
-        ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
-        ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
+        ImageView profileView = (ImageView) view.findViewById(R.id.ivProfile);
+        ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), profileView);
         
         // user
         TextView nameView = (TextView) view.findViewById(R.id.tvName);
@@ -47,6 +47,12 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         // time
         TextView timeView = (TextView) view.findViewById(R.id.tvTime);
         timeView.setText(Html.fromHtml("<small><font color='#777777'>" + Helpers.getRelativeTime(tweet.getCreatedAt()) + "</font></small>"));
+        
+        // media present
+        if ( tweet.getMediaUrls().size() > 0 ) {
+        	ImageView mediaPresentView = (ImageView) view.findViewById(R.id.ivMediaPresent);
+        	mediaPresentView.setVisibility(View.VISIBLE);
+        }
 
         return view;
 	}
