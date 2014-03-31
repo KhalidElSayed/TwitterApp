@@ -15,11 +15,21 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 public class ComposeActivity extends Activity {
 
 	private TwitterClient client;
+	private Tweet tweet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
+		
+		Intent intent = getIntent();
+		tweet = (Tweet) intent.getSerializableExtra(TimelineActivity.TWEET_KEY);
+		
+		if(tweet != null) {
+			EditText et_tweet = (EditText) findViewById(R.id.et_tweet);
+			et_tweet.setText("@" + tweet.getUser().getScreenName() + " ");
+			et_tweet.setSelection(et_tweet.length());
+		}
 	}
 
 	@Override
@@ -32,7 +42,7 @@ public class ComposeActivity extends Activity {
 	public void onPostClick(View v) {
 		EditText et_tweet = (EditText) findViewById(R.id.et_tweet);
 		client = TwitterApp.getRestClient();
-		client.postUpdate(et_tweet.getText().toString(), new JsonHttpResponseHandler() {
+		client.postUpdate(et_tweet.getText().toString(), tweet == null ? 0 : tweet.getRemoteId(), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject jsonTweet) {
 				Intent data = new Intent();

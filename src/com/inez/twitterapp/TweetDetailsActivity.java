@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +21,8 @@ public class TweetDetailsActivity extends Activity {
 		setContentView(R.layout.activity_tweet_details);
 		
 		Intent intent = getIntent();
-		Tweet tweet = (Tweet) intent.getSerializableExtra(TimelineActivity.TWEET_KEY);
-		
-		
+		final Tweet tweet = (Tweet) intent.getSerializableExtra(TimelineActivity.TWEET_KEY);
+
 		ImageView ivProfile = (ImageView) findViewById(R.id.ivProfile);
 		ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), ivProfile);
 		
@@ -42,6 +43,18 @@ public class TweetDetailsActivity extends Activity {
 			ImageLoader.getInstance().displayImage(tweet.getMediaUrls().get(0), ivMedium);
 			ivMedium.setVisibility(View.VISIBLE);
 		}
+		
+		Button buttonReply = (Button) findViewById(R.id.buttonReply);
+		buttonReply.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ComposeActivity.class);
+				intent.putExtra(TimelineActivity.TWEET_KEY,  tweet);
+				startActivityForResult(intent, TimelineActivity.COMPOSE_REQUEST);
+			}
+
+		});
 	}
 
 	@Override
@@ -49,6 +62,15 @@ public class TweetDetailsActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.tweet_details, menu);
 		return true;
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if ( requestCode == TimelineActivity.COMPOSE_REQUEST ) {
+			if ( resultCode == RESULT_OK ) {
+				setResult(RESULT_OK, data);
+				finish();
+			}
+		}
 	}
 
 }

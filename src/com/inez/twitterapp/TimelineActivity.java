@@ -33,6 +33,7 @@ public class TimelineActivity extends Activity {
 	private TwitterClient client;
 	public static final String TWEET_KEY = "tweet";
 	public static final int COMPOSE_REQUEST = 1;
+	public static final int DETAILS_REQUEST = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class TimelineActivity extends Activity {
 				Tweet tweet = adapter.getItem(position);
 				Intent intent = new Intent(getApplicationContext(), TweetDetailsActivity.class);
 				intent.putExtra(TWEET_KEY, tweet);
-				startActivity(intent);
+				startActivityForResult(intent, DETAILS_REQUEST);
 			}
 
 		});
@@ -162,6 +163,13 @@ public class TimelineActivity extends Activity {
 				Tweet tweet = (Tweet) data.getSerializableExtra(TWEET_KEY);
 				adapter.insert(tweet, 0);
 			}
+		}
+		if ( requestCode == DETAILS_REQUEST ) {
+			if ( resultCode == RESULT_OK ) {
+				Log.d("DETAILS_REQUEST", "RESULT_OK");
+				Tweet tweet = (Tweet) data.getSerializableExtra(TWEET_KEY);
+				adapter.insert(tweet, 0);
+			}			
 		}
 	}
 
