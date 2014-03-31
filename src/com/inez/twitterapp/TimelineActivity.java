@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
@@ -68,6 +71,18 @@ public class TimelineActivity extends Activity {
 					}
 				});				
 			}
+		});
+		
+		lv_tweets.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Tweet tweet = adapter.getItem(position);
+				Intent intent = new Intent(getApplicationContext(), TweetDetailsActivity.class);
+				intent.putExtra(TWEET_KEY, tweet);
+				startActivity(intent);
+			}
+
 		});
 		
 		loadTimelineFromDB();
