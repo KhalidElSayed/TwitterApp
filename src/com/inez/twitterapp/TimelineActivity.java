@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.activeandroid.query.Delete;
@@ -54,6 +56,11 @@ public class TimelineActivity extends Activity {
 						public void onFetched(ArrayList<Tweet> tweets) {
 							adapter.addAll(tweets);
 						}
+
+						@Override
+						public void onFailure(Throwable arg0, String arg1) {
+							Toast.makeText(getApplicationContext(), "Please, fix your Internet connection first and then come back!", Toast.LENGTH_LONG).show(); 
+						}
 					});
 				}
 			}
@@ -67,6 +74,12 @@ public class TimelineActivity extends Activity {
 					public void onFetched(ArrayList<Tweet> tweets) {
 						adapter.clear();
 						adapter.addAll(tweets);
+						lv_tweets.onRefreshComplete();
+					}
+
+					@Override
+					public void onFailure(Throwable arg0, String arg1) {
+						Toast.makeText(getApplicationContext(), "This is not OK! Connect me to the Interwebs right now!", Toast.LENGTH_LONG).show(); 
 						lv_tweets.onRefreshComplete();
 					}
 				});				
@@ -99,6 +112,11 @@ public class TimelineActivity extends Activity {
 					tweet.save();
 				}
 			}
+
+			@Override
+			public void onFailure(Throwable arg0, String arg1) {
+				Toast.makeText(getApplicationContext(), "From 1 to 10 how sure you are that you have Internet connection?", Toast.LENGTH_LONG).show(); 
+			}
 		});
 
 	}
@@ -117,6 +135,11 @@ public class TimelineActivity extends Activity {
 				public void onSuccess(JSONArray jsonTweets) {
 					ArrayList<Tweet> tweets = Tweet.fromJson(jsonTweets);
 					handler.onFetched(tweets);
+				}
+
+				@Override
+				public void onFailure(Throwable arg0, String arg1) {
+					handler.onFailure(arg0, arg1);
 				}
 		});
 	}
