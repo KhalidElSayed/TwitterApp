@@ -49,9 +49,11 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         timeView.setText(Html.fromHtml("<small><font color='#777777'>" + Helpers.getRelativeTime(tweet.getCreatedAt()) + "</font></small>"));
         
         // media present
+    	ImageView mediaPresentView = (ImageView) view.findViewById(R.id.ivMediaPresent);
         if ( tweet.getMediaUrls().size() > 0 ) {
-        	ImageView mediaPresentView = (ImageView) view.findViewById(R.id.ivMediaPresent);
         	mediaPresentView.setVisibility(View.VISIBLE);
+        } else {
+        	mediaPresentView.setVisibility(View.INVISIBLE);        	
         }
 
         return view;
