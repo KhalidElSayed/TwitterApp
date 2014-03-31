@@ -9,15 +9,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.inez.twitterapp.helpers.Helpers;
 
-public class Tweet implements Serializable {
+@Table(name = "Tweets")
+public class Tweet extends Model implements Serializable {
 	private static final long serialVersionUID = -4849210389375451448L;
+	
+	@Column(name = "body")
 	private String body;
-	private long uid;
+	
+	@Column(name = "remoteId")
+	private long remoteId;
+	
+	@Column(name = "favorited")
 	private boolean favorited;
+
+	@Column(name = "retweeted")
 	private boolean retweeted;
+	
+	@Column(name = "user")
 	private User user;
+
+	@Column(name = "createdAt")
 	private Date createdAt;
 
 	public User getUser() {
@@ -28,8 +44,8 @@ public class Tweet implements Serializable {
 		return body;
 	}
 
-	public long getId() {
-		return uid;
+	public long getRemoteId() {
+		return remoteId;
 	}
 
 	public boolean isFavorited() {
@@ -48,7 +64,7 @@ public class Tweet implements Serializable {
 		Tweet tweet = new Tweet();
 		try {
 			tweet.body = jsonObject.getString("text");
-			tweet.uid = jsonObject.getLong("id");
+			tweet.remoteId = jsonObject.getLong("id");
 			tweet.favorited = jsonObject.getBoolean("favorited");
 			tweet.retweeted = jsonObject.getBoolean("retweeted");
 			tweet.user = User.fromJson(jsonObject.getJSONObject("user"));

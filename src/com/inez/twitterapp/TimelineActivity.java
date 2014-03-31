@@ -1,6 +1,7 @@
 package com.inez.twitterapp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 
@@ -11,7 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.inez.twitterapp.models.Tweet;
+import com.inez.twitterapp.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import eu.erikw.PullToRefreshListView;
@@ -65,14 +69,31 @@ public class TimelineActivity extends Activity {
 				});				
 			}
 		});
-
+		
+		loadTimelineFromDB();
+		
 		fetchTimelineAsync(0, new FetchTimelineHandler() {
 			@Override
 			public void onFetched(ArrayList<Tweet> tweets) {
+				adapter.clear();
 				adapter.addAll(tweets);
+				new Delete().from(Tweet.class).execute();
+				new Delete().from(User.class).execute();
+				for(Tweet tweet : tweets) {
+					tweet.getUser().save();
+					tweet.save();
+				}
 			}
 		});
 
+	}
+	
+	private void loadTimelineFromDB() {
+		List<Tweet> tweets = new Select()
+			.from(Tweet.class)
+			.orderBy("createdAt ASC")
+			.execute();
+		adapter.addAll(tweets);
 	}
 	
 	private void fetchTimelineAsync(long max_id, final FetchTimelineHandler handler) {

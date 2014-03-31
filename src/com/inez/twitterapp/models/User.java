@@ -5,23 +5,44 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User implements Serializable {
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+@Table(name = "Users")
+public class User extends Model implements Serializable {
 	private static final long serialVersionUID = -349625963239036548L;
+
+	@Column(name = "name")
 	private String name;
-	private long uid;
+
+	@Column(name = "remoteId")
+	private long remoteId;
+
+	@Column(name = "screenName")
 	private String screenName;
+
+	@Column(name = "profileBgImageUrl")
 	private String profileBgImageUrl;
+
+	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
+
+	@Column(name = "numTweets")
 	private int numTweets;
+
+	@Column(name = "followersCount")
 	private int followersCount;
+
+	@Column(name = "friendsCount")
 	private int friendsCount;
 
 	public String getName() {
 		return name;
 	}
 
-	public long getId() {
-		return uid;
+	public long getRemoteId() {
+		return remoteId;
 	}
 
 	public String getScreenName() {
@@ -52,7 +73,7 @@ public class User implements Serializable {
 		User u = new User();
 		try {
 			u.name = json.getString("name");
-			u.uid = json.getLong("id");
+			u.remoteId = json.getLong("id");
 			u.screenName = json.getString("screen_name");
 			u.profileBgImageUrl = json
 					.getString("profile_background_image_url");
