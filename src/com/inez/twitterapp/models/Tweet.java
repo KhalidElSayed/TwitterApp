@@ -35,6 +35,8 @@ public class Tweet extends Model implements Serializable {
 
 	@Column(name = "createdAt")
 	private Date createdAt;
+	
+	private ArrayList<String> mediaUrls = new ArrayList<String>();
 
 	public User getUser() {
 		return user;
@@ -59,6 +61,10 @@ public class Tweet extends Model implements Serializable {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+	
+	public ArrayList<String> getMediaUrls() {
+		return mediaUrls;
+	}
 
 	public static Tweet fromJson(JSONObject jsonObject) {
 		Tweet tweet = new Tweet();
@@ -74,6 +80,14 @@ public class Tweet extends Model implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			try {
+				JSONArray media = jsonObject.getJSONObject("entities").getJSONArray("media");
+				for(int i = 0; i < media.length(); i++) {
+					tweet.mediaUrls.add(media.getJSONObject(i).getString("media_url"));
+				}
+			} catch (Exception e) {
+			}			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
