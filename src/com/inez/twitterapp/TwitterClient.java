@@ -60,4 +60,22 @@ public class TwitterClient extends OAuthBaseClient {
     	client.post(apiUrl, params, handler);
     }
 
+    /*
+    public void postUpdateWithMedia(String status, long inReplyToStatusId, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/update_with_media.json");
+    	RequestParams params = new RequestParams();
+    	params.put("status", status);
+    	Drawable d = context.getResources().getDrawable(R.drawable.ic_action_compose);
+    	Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+    	ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    	bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+    	byte[] bitmapdata = stream.toByteArray();
+    	params.put("media[]", new ByteArrayInputStream(bitmapdata), "test.png");
+    	if ( inReplyToStatusId != 0 ) {
+    		params.put("in_reply_to_status_id", String.valueOf(inReplyToStatusId));
+    	}
+    	client.post(apiUrl, params, handler);
+    }
+    */
+
 }
