@@ -11,5 +11,6 @@
     <string name="tweet_post">Tweet!</string>
     <string name="title_activity_tweet_details">TweetDetailsActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="add_photo">Add photo</string>
 
 </resources>

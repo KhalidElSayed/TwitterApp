@@ -1,5 +1,7 @@
 package com.inez.twitterapp;
 
+import java.io.ByteArrayInputStream;
+
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
@@ -45,37 +47,26 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("count", "25");
     	client.get(apiUrl, params, handler);
     }
-    
-    public void postUpdate(String status, AsyncHttpResponseHandler handler) {
-    	postUpdate(status, 0, handler);
-    }
 
-    public void postUpdate(String status, long inReplyToStatusId, AsyncHttpResponseHandler handler) {
-    	String apiUrl = getApiUrl("statuses/update.json");
-    	RequestParams params = new RequestParams();
-    	params.put("status", status);
-    	if ( inReplyToStatusId != 0 ) {
-    		params.put("in_reply_to_status_id", String.valueOf(inReplyToStatusId));
+    public void postUpdate(String status, byte[] bitmapdata, long inReplyToStatusId, AsyncHttpResponseHandler handler) {
+    	if ( bitmapdata != null ) {
+        	String apiUrl = getApiUrl("statuses/update_with_media.json");
+        	RequestParams params = new RequestParams();
+        	params.put("status", status);
+        	params.put("media[]", new ByteArrayInputStream(bitmapdata), "test.png");
+        	if ( inReplyToStatusId != 0 ) {
+        		params.put("in_reply_to_status_id", String.valueOf(inReplyToStatusId));
+        	}
+        	client.post(apiUrl, params, handler);
+    	} else {
+        	String apiUrl = getApiUrl("statuses/update.json");
+        	RequestParams params = new RequestParams();
+        	params.put("status", status);
+        	if ( inReplyToStatusId != 0 ) {
+        		params.put("in_reply_to_status_id", String.valueOf(inReplyToStatusId));
+        	}
+        	client.post(apiUrl, params, handler);    		
     	}
-    	client.post(apiUrl, params, handler);
     }
-
-    /*
-    public void postUpdateWithMedia(String status, long inReplyToStatusId, AsyncHttpResponseHandler handler) {
-    	String apiUrl = getApiUrl("statuses/update_with_media.json");
-    	RequestParams params = new RequestParams();
-    	params.put("status", status);
-    	Drawable d = context.getResources().getDrawable(R.drawable.ic_action_compose);
-    	Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-    	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    	bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-    	byte[] bitmapdata = stream.toByteArray();
-    	params.put("media[]", new ByteArrayInputStream(bitmapdata), "test.png");
-    	if ( inReplyToStatusId != 0 ) {
-    		params.put("in_reply_to_status_id", String.valueOf(inReplyToStatusId));
-    	}
-    	client.post(apiUrl, params, handler);
-    }
-    */
 
 }
