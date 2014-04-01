@@ -12,6 +12,7 @@ public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getActionBar().setDisplayShowTitleEnabled(false);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 	}

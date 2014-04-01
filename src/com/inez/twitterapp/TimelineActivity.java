@@ -38,6 +38,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogL
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getActionBar().setDisplayShowTitleEnabled(false);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 
