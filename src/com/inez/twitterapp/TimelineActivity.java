@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.json.JSONArray;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.inez.twitterapp.ComposeDialog.ComposeDialogListener;
+import com.inez.twitterapp.helpers.Ids;
 import com.inez.twitterapp.models.Tweet;
 import com.inez.twitterapp.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,15 +28,13 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends FragmentActivity implements ComposeDialogListener {
 
 	private PullToRefreshListView lv_tweets;
 	private TweetsAdapter adapter;
 	private ArrayList<Tweet> tweets;
 	private TwitterClient client;
-	public static final String TWEET_KEY = "tweet";
-	public static final int COMPOSE_REQUEST = 1;
-	public static final int DETAILS_REQUEST = 2;
+	private ComposeDialog composeDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,8 @@ public class TimelineActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Tweet tweet = adapter.getItem(position);
 				Intent intent = new Intent(getApplicationContext(), TweetDetailsActivity.class);
-				intent.putExtra(TWEET_KEY, tweet);
-				startActivityForResult(intent, DETAILS_REQUEST);
+				intent.putExtra(Ids.TWEET_KEY, tweet);
+				startActivityForResult(intent, Ids.DETAILS_REQUEST);
 			}
 
 		});
@@ -153,24 +154,35 @@ public class TimelineActivity extends Activity {
 	}
 	
 	public void onComposeClick(MenuItem menuItem) {
-		Intent intent = new Intent(this, ComposeActivity.class);
-		startActivityForResult(intent, COMPOSE_REQUEST);
+		FragmentManager fm = getSupportFragmentManager();
+		composeDialog = new  ComposeDialog();
+		composeDialog.show(fm, "activity_compose");
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if ( requestCode == COMPOSE_REQUEST ) {
+		if ( requestCode == Ids.MEDIA_REQUEST ) {
 			if ( resultCode == RESULT_OK ) {
-				Tweet tweet = (Tweet) data.getSerializableExtra(TWEET_KEY);
+				composeDialog.onActivityResult(requestCode, resultCode, data);
+			}
+		}
+		if ( requestCode == Ids.COMPOSE_REQUEST ) {
+			if ( resultCode == RESULT_OK ) {
+				Tweet tweet = (Tweet) data.getSerializableExtra(Ids.TWEET_KEY);
 				adapter.insert(tweet, 0);
 			}
 		}
-		if ( requestCode == DETAILS_REQUEST ) {
+		if ( requestCode == Ids.DETAILS_REQUEST ) {
 			if ( resultCode == RESULT_OK ) {
 				Log.d("DETAILS_REQUEST", "RESULT_OK");
-				Tweet tweet = (Tweet) data.getSerializableExtra(TWEET_KEY);
+				Tweet tweet = (Tweet) data.getSerializableExtra(Ids.TWEET_KEY);
 				adapter.insert(tweet, 0);
 			}			
 		}
+	}
+
+	@Override
+	public void onFinishComposeDialog(Tweet tweet) {
+		adapter.insert(tweet, 0);
 	}
 
 }

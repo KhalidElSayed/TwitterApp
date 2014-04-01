@@ -49,11 +49,6 @@
             android:label="@string/title_activity_timeline" >
         </activity>
         <activity
-            android:name="com.inez.twitterapp.ComposeActivity"
-            android:label="@string/title_activity_compose"
-            android:windowSoftInputMode="stateVisible" >
-        </activity>
-        <activity
             android:name="com.inez.twitterapp.TweetDetailsActivity"
             android:label="@string/title_activity_tweet_details" >
         </activity>

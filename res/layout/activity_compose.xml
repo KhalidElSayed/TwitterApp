@@ -30,14 +30,12 @@
             android:id="@+id/button_add_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onAddPhotoClick"
             android:text="@string/add_photo" />
 
         <Button
             android:id="@+id/button_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onPostClick"
             android:text="@string/tweet_post" />
     </LinearLayout>
 

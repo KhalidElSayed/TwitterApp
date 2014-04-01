@@ -1,6 +1,5 @@
 package com.inez.twitterapp;
 
-import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 
