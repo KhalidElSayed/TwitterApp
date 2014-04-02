@@ -1,4 +1,4 @@
-package com.inez.twitterapp;
+package com.inez.twitterapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,9 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.inez.twitterapp.ComposeDialog.ComposeDialogListener;
+import com.inez.twitterapp.R;
+import com.inez.twitterapp.dialogs.ComposeDialog;
+import com.inez.twitterapp.dialogs.ComposeDialog.ComposeDialogListener;
 import com.inez.twitterapp.helpers.Ids;
 import com.inez.twitterapp.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;

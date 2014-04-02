@@ -1,4 +1,4 @@
-package com.inez.twitterapp;
+package com.inez.twitterapp.dialogs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,6 +20,9 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +31,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.inez.twitterapp.R;
+import com.inez.twitterapp.TwitterApp;
+import com.inez.twitterapp.TwitterClient;
 import com.inez.twitterapp.helpers.Ids;
 import com.inez.twitterapp.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -136,6 +143,22 @@ public class ComposeDialog extends DialogFragment {
 			    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
 
 			    getActivity().startActivityForResult(chooserIntent, Ids.MEDIA_REQUEST);
+			}
+		});
+		
+		et_tweet.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				TextView tv_counter = (TextView) view.findViewById(R.id.tv_counter);
+				tv_counter.setText( et_tweet.getText().toString().length() + "/140" );
 			}
 		});
 		return view;

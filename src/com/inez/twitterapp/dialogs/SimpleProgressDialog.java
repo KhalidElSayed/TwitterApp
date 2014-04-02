@@ -1,4 +1,6 @@
-package com.inez.twitterapp;
+package com.inez.twitterapp.dialogs;
+
+import com.inez.twitterapp.SimpleDialogFragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;

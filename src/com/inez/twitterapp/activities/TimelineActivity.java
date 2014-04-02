@@ -1,4 +1,4 @@
-package com.inez.twitterapp;
+package com.inez.twitterapp.activities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,14 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.inez.twitterapp.ComposeDialog.ComposeDialogListener;
+import com.inez.twitterapp.EndlessScrollListener;
+import com.inez.twitterapp.FetchTimelineHandler;
+import com.inez.twitterapp.R;
+import com.inez.twitterapp.TweetsAdapter;
+import com.inez.twitterapp.TwitterApp;
+import com.inez.twitterapp.TwitterClient;
+import com.inez.twitterapp.dialogs.ComposeDialog;
+import com.inez.twitterapp.dialogs.ComposeDialog.ComposeDialogListener;
 import com.inez.twitterapp.helpers.Ids;
 import com.inez.twitterapp.models.Tweet;
 import com.inez.twitterapp.models.User;
