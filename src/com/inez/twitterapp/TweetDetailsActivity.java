@@ -57,7 +57,7 @@ public class TweetDetailsActivity extends FragmentActivity implements ComposeDia
 		FragmentManager fm = getSupportFragmentManager();
 		composeDialog = new  ComposeDialog();
 		composeDialog.setArguments(args);
-		composeDialog.show(fm, "activity_compose");
+		composeDialog.show(fm, "dialog_compose");
 	}
 
 	@Override

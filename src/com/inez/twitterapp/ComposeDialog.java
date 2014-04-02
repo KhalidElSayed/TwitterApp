@@ -51,7 +51,7 @@ public class ComposeDialog extends DialogFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.activity_compose, container);
+		view = inflater.inflate(R.layout.dialog_compose, container);
 		getDialog().setTitle("Compose wisely!");
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 		

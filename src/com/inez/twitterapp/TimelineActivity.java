@@ -157,7 +157,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogL
 	public void onComposeClick(MenuItem menuItem) {
 		FragmentManager fm = getSupportFragmentManager();
 		composeDialog = new  ComposeDialog();
-		composeDialog.show(fm, "activity_compose");
+		composeDialog.show(fm, "dialog_compose");
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

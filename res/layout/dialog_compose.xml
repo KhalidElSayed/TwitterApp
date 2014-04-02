@@ -14,6 +14,7 @@
         android:layout_height="80dp"
         android:gravity="top"
         android:hint="@string/tweet_hint"
+        android:maxLength="140"
         android:maxLines="3" >
 
         <requestFocus />
